@@ -1,6 +1,9 @@
 angular.module('app', []).controller('indexController', function ($scope, $http) {
     const contextPath = 'http://localhost:8189/happy';
     $scope.authorized = false;
+    $scope.isLoginButtonToggled = false;
+    $scope.isCartButtonToggled = false;
+    $scope.isFilterButtonToggled = false;
 
     $scope.fillTable = function (pageIndex = 1) {
         $http({
@@ -38,6 +41,15 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
         });
     };
 
+    $scope.clearCart = function () {
+        $http({
+            url: contextPath + '/api/v1/cart/clear',
+            method: 'GET'
+        }).then(function (response) {
+            $scope.Cart = response.data;
+        });
+    };
+
     $scope.generatePagesIndexes = function(startPage, endPage) {
         let arr = [];
         for (let i = startPage; i < endPage + 1; i++) {
@@ -58,6 +70,14 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
         $http.delete(contextPath + '/api/v1/products/' + productId)
             .then(function (response) {
                 $scope.fillTable();
+            });
+    }
+
+    //not sure which http method to use
+    $scope.addOrder = function () {
+        $http.get(contextPath + '/api/v1/order/')
+            .then(function (response) {
+                $scope.clearCart();
             });
     }
 
@@ -83,12 +103,35 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
                     $scope.user.username = null;
                     $scope.user.password = null;
                     $scope.authorized = true;
+                    $scope.isLoginButtonToggled = false;
                     $scope.fillTable();
+
                 }
             }, function errorCallback(response) {
                 window.alert("Error");
             });
     };
+
+    /*tasty test*/
+    $scope.logoff = function () {
+        $http.defaults.headers.common.Authorization = null;
+        $scope.ProductsPage = null;
+        $scope.authorized = false;
+        $scope.isLoginButtonToggled = false;
+        $scope.isCartButtonToggled = false;
+    };
+
+    $scope.toggleLoginButton = function () {
+        $scope.isLoginButtonToggled = !$scope.isLoginButtonToggled;
+    }
+
+    $scope.toggleCartButton = function () {
+        $scope.isCartButtonToggled = !$scope.isCartButtonToggled;
+    }
+
+    $scope.toggleFilterButton = function () {
+        $scope.isFilterButtonToggled = !$scope.isFilterButtonToggled;
+    }
 
     // $scope.fillTable();
     // $scope.showCart();
