@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.geekbrains.happy.market.beans.Cart;
 import ru.geekbrains.happy.market.dto.CartDto;
 
-import java.security.Principal;
-
 @RestController
 @RequestMapping("/api/v1/cart")
 @RequiredArgsConstructor
