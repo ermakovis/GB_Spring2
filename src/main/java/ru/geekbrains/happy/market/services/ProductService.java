@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import ru.geekbrains.happy.market.dto.ProductDto;
 import ru.geekbrains.happy.market.model.Product;
 import ru.geekbrains.happy.market.repositories.ProductRepository;
+import ru.geekbrains.happy.market.soap.Item;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +26,16 @@ public class ProductService {
 
     public Optional<ProductDto> findProductDtoById(Long id) {
         return productRepository.findById(id).map(ProductDto::new);
+    }
+
+    public List<Item> findAllForSoap() {
+        return productRepository.findAll().stream().map(e -> {
+            Item p = new Item();
+            p.setId(e.getId());
+            p.setPrice(e.getPrice());
+            p.setTitle(e.getTitle());
+            return p;
+        }).collect(Collectors.toList());
     }
 
     public Page<ProductDto> findAll(Specification<Product> spec, int page, int pageSize) {
