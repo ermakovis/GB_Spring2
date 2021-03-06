@@ -30,6 +30,9 @@ public class Order {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Column(name = "address")
+    private String address;
+
     @CreationTimestamp
     @Column(name = "created_at")
     private LocalDateTime createdAt;

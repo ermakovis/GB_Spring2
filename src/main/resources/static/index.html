@@ -38,32 +38,39 @@
 
     <div ng-if="isCartButtonToggled">
         <h3>Корзина</h3>
-        <table class="table table-hover" cellpadding="0" cellspacing="0">
-            <thead>
-            <tr>
-                <td>Название</td>
-                <td>Количество</td>
-                <td>Цена</td>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="oi in Cart.items">
-                <td>{{oi.productTitle}}</td>
-                <td>{{oi.quantity}}</td>
-                <td>{{oi.quantity + ' x ' + oi.price + ' = ' + (oi.price * oi.quantity)}}</td>
-            </tr>
-            <tr>
-                <td>Итого</td>
-                <td></td>
-                <td>{{Cart.totalPrice}}</td>
-            </tr>
-            <tr>
-                <div>
-                    <button ng-click="addOrder()" class="btn btn-success" type="submit">Заказать</button>
-                </div>
-            </tr>
-            </tbody>
-        </table>
+        <form class="form-signit">
+            <div>
+                <table class="table table-hover" cellpadding="0" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <td>Название</td>
+                        <td>Количество</td>
+                        <td>Цена</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="oi in Cart.items">
+                        <td>{{oi.productTitle}}</td>
+                        <td>{{oi.quantity}}</td>
+                        <td>{{oi.quantity + ' x ' + oi.price + ' = ' + (oi.price * oi.quantity)}}</td>
+                    </tr>
+                    <tr>
+                        <td>Итого</td>
+                        <td></td>
+                        <td>{{Cart.totalPrice}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <label for="inputOrderAddress" class="sr-only">Адрес доставки</label>
+                <input type="text" ng-model="order.address" id="inputOrderAddress" class="form-control"
+                       placeholder="Адрес доставки" required="">
+            </div>
+            <div>
+                <button class="btn btn-success" ng-click="addOrder(order)">Заказать</button>
+            </div>
+        </form>
     </div>
 
     <div class="mb-3 text-center" ng-show="!authorized && isLoginButtonToggled">

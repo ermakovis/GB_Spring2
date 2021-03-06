@@ -74,11 +74,16 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
     }
 
     //not sure which http method to use
-    $scope.addOrder = function () {
-        $http.get(contextPath + '/api/v1/order/')
-            .then(function (response) {
-                $scope.clearCart();
-            });
+    $scope.addOrder = function (order) {
+        $http({
+            url: contextPath + '/api/v1/order',
+            method: 'GET',
+            params: {
+                address: order.address
+            }
+        }).then(function () {
+            $scope.clearCart();
+        })
     }
 
     $scope.addToCart = function (productId) {
