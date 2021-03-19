@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xs:schema
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns:tns="http://www.geekbrains.ru/happy/ws/items"
+        targetNamespace="http://www.geekbrains.ru/happy/ws/items" elementFormDefault="qualified">
+
+    <xs:element name="getAllItemsRequest">
+        <xs:complexType/>
+    </xs:element>
+
+    <xs:element name="getAllItemsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="products" maxOccurs="unbounded" type="tns:item"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="item">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long"/>
+            <xs:element name="title" type="xs:string"/>
+            <xs:element name="price" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
